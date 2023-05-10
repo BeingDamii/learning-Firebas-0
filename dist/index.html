@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.cdnfonts.com/css/helvetica-neue-9"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Learning firebase 9</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>Add or remove a Quote</h1>
+      <div class="breadcrumbs">
+        <button class="breadcrumb-btn add active">Add quote</button>
+        <button class="breadcrumb-btn delete">Delete quote</button>
+      </div>
+      <form class="add-quote">
+        <label for="meaning">Quote</label>
+        <input type="text" name="Quote" />
+        <label for="meaning">Meaning</label>
+        <input type="text" name="meaning" />
+        <button class="form-btn submit-btn" type="submit">Add new quote</button>
+      </form>
+      <form class="delete-quote hide">
+        <label for="id">Quote id</label>
+        <input type="text" name="id" />
+        <button class="form-btn delete-btn" type="submit">Delete quote</button>
+      </form>
+    </div>
+  </body>
+  <script src="bundle.js"></script>
+</html>
