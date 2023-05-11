@@ -22,7 +22,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // init firestore
-const db = getFirestore();
+const db = getFirestore(app);
 
 // collection ref
 
@@ -36,21 +36,6 @@ const colRef = collection(db, "street-quotes");
 //   });
 //   console.log(quotes);
 // });
-
-// make it a function
-function getData() {
-  const quotes = [];
-  getDocs(colRef)
-    .then((snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        quotes.push({ ...doc.data(), id: doc.id });
-      });
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-  return quotes;
-}
 
 // hide or show forms
 
@@ -104,5 +89,24 @@ deleteForm.addEventListener("submit", (event) => {
   deleteDoc(docRef).then(() => {
     deleteForm.reset();
     console, log("item deleted");
+  });
+});
+
+// create new  quote
+const quoteWrapper = document.querySelector(".quotes");
+getDocs(colRef).then((snapshot) => {
+  const quotes = [];
+  snapshot.docs.forEach((doc) => {
+    quotes.push({ ...doc.data(), id: doc.id });
+  });
+  quotes.forEach((obj) => {
+    const newQuote = `
+    <div class="quote">
+    <h1 class="quote-heading">${obj.Quote}</h1>
+    <p class="quote-meaning">${obj.Meaning}</p>
+  </div>
+    `;
+    quoteWrapper.innerHTML+= newQuote
+    console.log(obj.Quote, obj.Meaning);
   });
 });
