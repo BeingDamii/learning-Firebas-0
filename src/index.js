@@ -1,6 +1,13 @@
 import { initializeApp } from "firebase/app";
 
-import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyD_bZZ3VtwNBpn7kSJXMPQxVcpd5Op2nLQ",
@@ -84,11 +91,18 @@ addForm.addEventListener("submit", (event) => {
   const formDataObj = Object.fromEntries(formData.entries());
 
   console.log(formDataObj);
-  addDoc(colRef, formDataObj).then(()=>{
-    addForm.reset()
-  })
+  addDoc(colRef, formDataObj).then(() => {
+    addForm.reset();
+  });
 });
 
 deleteForm.addEventListener("submit", (event) => {
   event.preventDefault();
+  const formData = new FormData(event.target);
+  const formDataObj = Object.fromEntries(formData.entries());
+  const docRef = doc(db, "street-quotes", formDataObj.id);
+  deleteDoc(docRef).then(() => {
+    deleteForm.reset();
+    console, log("item deleted");
+  });
 });

@@ -12,24 +12,40 @@
     <title>Learning firebase 9</title>
   </head>
   <body>
-    <div class="wrapper">
-      <h1>Add or remove a Quote</h1>
-      <div class="breadcrumbs">
-        <button class="breadcrumb-btn add active">Add quote</button>
-        <button class="breadcrumb-btn delete">Delete quote</button>
+    <div class="main-wrapper">
+      <div class="wrapper">
+        <h1>Add or remove a Quote</h1>
+        <div class="breadcrumbs">
+          <button class="breadcrumb-btn add active">Add quote</button>
+          <button class="breadcrumb-btn delete">Delete quote</button>
+        </div>
+        <form class="add-quote">
+          <label for="meaning">Quote</label>
+          <input type="text" name="Quote" />
+          <label for="meaning">Meaning</label>
+          <input type="text" name="meaning" />
+          <button class="form-btn submit-btn" type="submit">
+            Add new quote
+          </button>
+        </form>
+        <form class="delete-quote hide">
+          <label for="id">Quote id</label>
+          <input type="text" name="id" />
+          <button class="form-btn delete-btn" type="submit">
+            Delete quote
+          </button>
+        </form>
       </div>
-      <form class="add-quote">
-        <label for="meaning">Quote</label>
-        <input type="text" name="Quote" />
-        <label for="meaning">Meaning</label>
-        <input type="text" name="meaning" />
-        <button class="form-btn submit-btn" type="submit">Add new quote</button>
-      </form>
-      <form class="delete-quote hide">
-        <label for="id">Quote id</label>
-        <input type="text" name="id" />
-        <button class="form-btn delete-btn" type="submit">Delete quote</button>
-      </form>
+      <div class="wrapper quotes">
+        <div class="quote">
+          <h1 class="quote-heading">
+            Lorem ipsum dolor sit, amet consectetur
+          </h1>
+          <p class="quote-meaning">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nihil inventore rerum omnis officia in nam unde eius saepe quidem culpa.
+          </p>
+        </div>
+      </div>
     </div>
   </body>
   <script src="bundle.js"></script>
