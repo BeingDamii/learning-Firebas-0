@@ -6,16 +6,19 @@ import {
   getDocs,
   addDoc,
   doc,
+  onSnapshot,
   deleteDoc,
 } from "firebase/firestore";
 
+const env = require("./env.js");
+
 const firebaseConfig = {
-  apiKey: "AIzaSyD_bZZ3VtwNBpn7kSJXMPQxVcpd5Op2nLQ",
-  authDomain: "learning-firebase-477bf.firebaseapp.com",
-  projectId: "learning-firebase-477bf",
-  storageBucket: "learning-firebase-477bf.appspot.com",
-  messagingSenderId: "482855022588",
-  appId: "1:482855022588:web:0d6d6bf151a4da9d9c0c79",
+  apiKey: env.APIKEY,
+  authDomain: env.AUTH_DOMAIN,
+  projectId: env.PROJECT_ID,
+  storageBucket: env.STORAGE_BUCKET,
+  messagingSenderId: env.MESSAGING_SENDER_ID,
+  appId: env.APP_ID,
 };
 
 // init firebase
@@ -30,6 +33,16 @@ const colRef = collection(db, "street-quotes");
 
 // get docs
 // getDocs(colRef).then((snapshot) => {
+//   const quotes = [];
+//   snapshot.docs.forEach((doc) => {
+//     quotes.push({ ...doc.data(), id: doc.id });
+//   });
+//   console.log(quotes);
+// });
+
+// realtime collection data
+
+// onSnapshot(colRef, (snapshot) => {
 //   const quotes = [];
 //   snapshot.docs.forEach((doc) => {
 //     quotes.push({ ...doc.data(), id: doc.id });
@@ -92,9 +105,27 @@ deleteForm.addEventListener("submit", (event) => {
   });
 });
 
-// create new  quote
+// create new  quote with get docs
+
+// const quoteWrapper = document.querySelector(".quotes");
+// getDocs(colRef).then((snapshot) => {
+//   const quotes = [];
+//   snapshot.docs.forEach((doc) => {
+//     quotes.push({ ...doc.data(), id: doc.id });
+//   });
+//   quotes.forEach((obj) => {
+//     const newQuote = `
+//     <div class="quote">
+//     <h1 class="quote-heading">${obj.Quote}</h1>
+//     <p class="quote-meaning">${obj.Meaning}</p>
+//   </div>
+//     `;
+//     quoteWrapper.innerHTML += newQuote;
+//   });
+// });
+
 const quoteWrapper = document.querySelector(".quotes");
-getDocs(colRef).then((snapshot) => {
+onSnapshot(colRef, (snapshot) => {
   const quotes = [];
   snapshot.docs.forEach((doc) => {
     quotes.push({ ...doc.data(), id: doc.id });
@@ -106,7 +137,6 @@ getDocs(colRef).then((snapshot) => {
     <p class="quote-meaning">${obj.Meaning}</p>
   </div>
     `;
-    quoteWrapper.innerHTML+= newQuote
-    console.log(obj.Quote, obj.Meaning);
+    quoteWrapper.innerHTML += newQuote;
   });
 });
