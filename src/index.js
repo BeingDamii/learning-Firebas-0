@@ -7,11 +7,14 @@ import {
   addDoc,
   doc,
   onSnapshot,
+  updateDoc,
   query,
   where,
   deleteDoc,
   serverTimestamp,
 } from "firebase/firestore";
+
+import{getAuth}from "firebase/auth"
 
 const env = require("./env.js");
 
@@ -57,7 +60,7 @@ const colRef = collection(db, "street-quotes");
 
 const addBreadcrumb = document.querySelector(".add");
 const deleteBreadcrumb = document.querySelector(".delete");
-const updateBreadcrumb= document.querySelector(".update");
+const updateBreadcrumb = document.querySelector(".update");
 const deleteQuote = document.querySelector(".delete-quote");
 const addQuote = document.querySelector(".add-quote");
 const addForm = document.querySelector(".add-quote");
@@ -68,11 +71,11 @@ addBreadcrumb.addEventListener("click", (event) => {
   addBreadcrumb.classList.toggle("active");
   if (addBreadcrumb.classList.contains("active")) {
     deleteQuote.classList.add("hide");
-    updateForm.classList.add("hide")
+    updateForm.classList.add("hide");
     updateBreadcrumb.classList.remove("active");
     addQuote.classList.remove("hide");
     deleteBreadcrumb.classList.remove("active");
-  } 
+  }
 });
 
 deleteBreadcrumb.addEventListener("click", (event) => {
@@ -80,10 +83,10 @@ deleteBreadcrumb.addEventListener("click", (event) => {
   if (deleteBreadcrumb.classList.contains("active")) {
     deleteQuote.classList.remove("hide");
     addQuote.classList.add("hide");
-    updateForm.classList.add("hide")
-    updateBreadcrumb.classList.remove("active")
+    updateForm.classList.add("hide");
+    updateBreadcrumb.classList.remove("active");
     addBreadcrumb.classList.remove("active");
-  } 
+  }
 });
 
 updateBreadcrumb.addEventListener("click", (event) => {
@@ -91,8 +94,8 @@ updateBreadcrumb.addEventListener("click", (event) => {
   if (updateBreadcrumb.classList.contains("active")) {
     deleteQuote.classList.add("hide");
     addQuote.classList.add("hide");
-    updateForm.classList.remove("hide")
-    updateBreadcrumb.classList.add("active")
+    updateForm.classList.remove("hide");
+    updateBreadcrumb.classList.add("active");
     addBreadcrumb.classList.remove("active");
     deleteBreadcrumb.classList.remove("active");
   }
@@ -163,3 +166,21 @@ onSnapshot(colRef, (snapshot) => {
 // );
 
 // console.log(getQuery);
+
+updateForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const formDataObj = Object.fromEntries(formData.entries());
+  const docRef = doc(db, "street-quotes", formDataObj.id);
+  updateDoc(docRef, {
+    Meaning: formDataObj.Meaning,
+  }).then(()=>{
+    updateForm.reset()
+  });
+});
+
+
+// firebase Auth
+
+
+const auth = getAuth()
