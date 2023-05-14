@@ -7,7 +7,10 @@ import {
   addDoc,
   doc,
   onSnapshot,
+  query,
+  where,
   deleteDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 
 const env = require("./env.js");
@@ -54,21 +57,22 @@ const colRef = collection(db, "street-quotes");
 
 const addBreadcrumb = document.querySelector(".add");
 const deleteBreadcrumb = document.querySelector(".delete");
+const updateBreadcrumb= document.querySelector(".update");
 const deleteQuote = document.querySelector(".delete-quote");
 const addQuote = document.querySelector(".add-quote");
 const addForm = document.querySelector(".add-quote");
 const deleteForm = document.querySelector(".delete-quote");
+const updateForm = document.querySelector(".update-quote");
 
 addBreadcrumb.addEventListener("click", (event) => {
   addBreadcrumb.classList.toggle("active");
   if (addBreadcrumb.classList.contains("active")) {
     deleteQuote.classList.add("hide");
+    updateForm.classList.add("hide")
+    updateBreadcrumb.classList.remove("active");
     addQuote.classList.remove("hide");
     deleteBreadcrumb.classList.remove("active");
-  } else {
-    deleteQuote.classList.remove("hide");
-    addQuote.classList.add("hide");
-  }
+  } 
 });
 
 deleteBreadcrumb.addEventListener("click", (event) => {
@@ -76,10 +80,21 @@ deleteBreadcrumb.addEventListener("click", (event) => {
   if (deleteBreadcrumb.classList.contains("active")) {
     deleteQuote.classList.remove("hide");
     addQuote.classList.add("hide");
+    updateForm.classList.add("hide")
+    updateBreadcrumb.classList.remove("active")
     addBreadcrumb.classList.remove("active");
-  } else {
+  } 
+});
+
+updateBreadcrumb.addEventListener("click", (event) => {
+  updateBreadcrumb.classList.toggle("active");
+  if (updateBreadcrumb.classList.contains("active")) {
     deleteQuote.classList.add("hide");
-    addQuote.classList.remove("hide");
+    addQuote.classList.add("hide");
+    updateForm.classList.remove("hide")
+    updateBreadcrumb.classList.add("active")
+    addBreadcrumb.classList.remove("active");
+    deleteBreadcrumb.classList.remove("active");
   }
 });
 
@@ -87,8 +102,7 @@ addForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(event.target);
   const formDataObj = Object.fromEntries(formData.entries());
-
-  console.log(formDataObj);
+  formDataObj.createdAt = serverTimestamp();
   addDoc(colRef, formDataObj).then(() => {
     addForm.reset();
   });
@@ -140,3 +154,12 @@ onSnapshot(colRef, (snapshot) => {
     quoteWrapper.innerHTML += newQuote;
   });
 });
+
+//  working with queries : queries allow you filter data fetched based on a certain condition
+
+// const getQuery = query(
+//   colRef,
+//   where("Quote", "==", "No be today yansh dey back")
+// );
+
+// console.log(getQuery);

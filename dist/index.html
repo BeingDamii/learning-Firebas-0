@@ -18,6 +18,7 @@
         <div class="breadcrumbs">
           <button class="breadcrumb-btn add active">Add quote</button>
           <button class="breadcrumb-btn delete">Delete quote</button>
+          <button class="breadcrumb-btn update">update quote</button>
         </div>
         <form class="add-quote">
           <label for="Quote">Quote</label>
@@ -35,10 +36,17 @@
             Delete quote
           </button>
         </form>
+        <form class="update-quote hide">
+          <label for="id">Quote id</label>
+          <input type="text" name="id" />
+          <label for="Meaning">new Meaning</label>
+          <input type="text" name="Meaning" />
+          <button class="form-btn delete-btn" type="submit">
+            upddate quote
+          </button>
+        </form>
       </div>
-      <div class="wrapper quotes">
-      
-      </div>
+      <div class="wrapper quotes"></div>
     </div>
   </body>
   <script src="bundle.js"></script>
