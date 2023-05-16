@@ -14,7 +14,12 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-import{getAuth}from "firebase/auth"
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signOut,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const env = require("./env.js");
 
@@ -174,13 +179,62 @@ updateForm.addEventListener("submit", (event) => {
   const docRef = doc(db, "street-quotes", formDataObj.id);
   updateDoc(docRef, {
     Meaning: formDataObj.Meaning,
-  }).then(()=>{
-    updateForm.reset()
+  }).then(() => {
+    updateForm.reset();
   });
 });
 
-
 // firebase Auth
 
+const auth = getAuth();
 
-const auth = getAuth()
+// get form elements (sign up)
+
+// const loginForm = document.querySelector(".login-form");
+// loginForm.addEventListener("submit", (event) => {
+//   const formData = new FormData(event.target);
+//   const formDataObj = Object.fromEntries(formData.entries());
+
+//   createUserWithEmailAndPassword(auth, formDataObj.email, formDataObj.password)
+//     .then((cred) => {
+//       console.log("user created", cred.user);
+//       loginForm.reset();
+//     })
+//     .catch((err) => {
+//       console.log(err.message);
+//     });
+// });
+
+// log out
+
+const logoutBtn = document.querySelector(".log-out");
+
+console.log(logoutBtn);
+
+logoutBtn.addEventListener("click", () => {
+  signOut(auth)
+    .then(() => {
+      console.log("user signed out!!");
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+});
+
+// login
+
+const loginForm = document.querySelector(".login-form");
+
+loginForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const formDataObj = Object.fromEntries(formData.entries());
+  signInWithEmailAndPassword(auth, formDataObj.email, formDataObj.password)
+    .then((cred) => {
+      console.log("User logged in", cred.user);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+

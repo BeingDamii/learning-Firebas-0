@@ -75,6 +75,7 @@ input {
   font-weight: bold;
   font-size: 18px;
   background-color: blue;
+  cursor: pointer;
   color: whitesmoke;
   border-color: transparent;
 }
@@ -95,4 +96,15 @@ input {
 
 .hide{
     display: none;
+}
+
+.login-form{
+  margin-top: 30px;
+}
+
+.log-out{
+  padding: 10px 20px;
+  font-weight: bold;
+  margin-top: 10px;
+  cursor: pointer;
 }
